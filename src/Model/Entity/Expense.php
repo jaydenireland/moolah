@@ -49,19 +49,22 @@ class Expense extends Entity
 		return $textTransformer->transform($rule);
 	}
 
-	public function _getNext($limit = 10) {
+	public function _getNext($limit = 1) {
 		$rule = $this->_getRRule();
-		return (new \Recurr\Transformer\ArrayTransformer)->transform($rule)->map(function($e) {
+		$transformed = (new \Recurr\Transformer\ArrayTransformer)->transform($rule)->map(function($e) {
 			return new Time($e->getStart());
 		})->slice($this->nextKey, $limit);
+		return $limit == 1 ? array_values($transformed)[0] : $transformed;
 	}
 
 	/**
 	* Magic getter to allow for magic next{length} getter
+	* $expense->next10, $expense->next500, $expense->next2
 	*/
 	public function &__get($property) {
 		if (substr($property, 0, 4) == 'next') {
 			$length = substr($property, 4, strlen($property));
+			$length = empty($length) ? 1 : $length;
 			$next = $this->_getNext($length);
 			$this->nextKey += $length;
 			return $next;
