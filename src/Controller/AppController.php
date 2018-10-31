@@ -27,7 +27,7 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
+	public $authUser;
 	/**
 	 * Initialization hook method.
 	 *
@@ -52,6 +52,20 @@ class AppController extends Controller
 		 * Enable the following component for recommended CakePHP security settings.
 		 * see https://book.cakephp.org/3.0/en/controllers/components/security.html
 		 */
-		//$this->loadComponent('Security');
+		$this->loadComponent('Security');
 	}
+
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
+		if ($this->Auth->user()) {
+			$this->authUser = $this->Auth->user();
+			$this->set('authUser', $this->authUser);
+		}
+	}
+
+	public function beforeRender(Event $event) {
+		parent::beforeRender($event);
+		$this->set('title', 'Moolah');
+	}
+
 }

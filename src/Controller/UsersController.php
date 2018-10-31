@@ -24,7 +24,7 @@ class UsersController extends AppController {
 			if ($user) {
 				$this->Auth->setUser($user);
 				$this->Flash->success("Logged in as " . $user['full_name']);
-				return;
+				return $this->redirect($this->Auth->redirectUrl());
 			}
 			$this->Flash->error('Your username or password is incorrect.');
 		}
@@ -50,6 +50,11 @@ class UsersController extends AppController {
 			}
 			$this->Flash->error(__('The user could not be saved. Please, try again.'));
 		}
+		$this->set(compact('user'));
+	}
+
+	public function dashboard() {
+		$user = $this->Users->get($this->authUser['id'], ['contain' => ['PlaidAccounts']]);
 		$this->set(compact('user'));
 	}
 }

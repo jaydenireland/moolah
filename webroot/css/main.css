@@ -1,0 +1,21 @@
+.ui.input {
+	padding: 10px;
+	width: 84%;
+}
+.ui.message {
+	margin: 15px;
+}
+.ui.left.button {
+	width: 100%;
+	margin-left: 0.6em;
+}
+.ui.table {
+	border: unset;
+	background-color: unset;
+}
+.mainContent {
+	max-width: 90%;
+	background-color: #f9fafb;
+	margin-top: 10px;
+	border-radius: 4px;
+}

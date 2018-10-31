@@ -45,6 +45,10 @@ class UsersTable extends Table
 			'foreignKey' => 'role_id',
 			'joinType' => 'INNER'
 		]);
+
+		$this->hasMany('PlaidAccounts', [
+			'foreignKey' => 'user_id'
+		]);
 	}
 
 	/**
